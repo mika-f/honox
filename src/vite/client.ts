@@ -1,11 +1,13 @@
 import type { Plugin } from 'vite'
 
 type Options = {
+  entry?: string
   jsxImportSource?: string
   assetsDir?: string
 }
 
 export const defaultOptions: Options = {
+  entry: '/app/client.ts',
   jsxImportSource: 'hono/jsx/dom',
   assetsDir: 'static',
 }
@@ -17,7 +19,7 @@ function client(options?: Options): Plugin {
       return {
         build: {
           rollupOptions: {
-            input: ['/app/client.ts'],
+            input: [options?.entry ?? defaultOptions.entry],
           },
           assetsDir: options?.assetsDir ?? defaultOptions.assetsDir,
           manifest: true,
